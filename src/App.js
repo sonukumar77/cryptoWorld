@@ -41,7 +41,7 @@ const App = () => {
           >
             CryptoWorld <br />
             All rights reserved <br />
-            Design with Sonu Verma with ❤
+            Design & Developed By Sonu Verma with ❤
           </Typography.Title>
           <Space>
             <Link to="/">Home</Link>
