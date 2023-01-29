@@ -37,7 +37,7 @@ const Cryptocurrencies = ({simplified}) => {
                             hoverable
                             >
                                 <p>Price: {millify(currency.price)}</p>
-                                <p>Market Cap: {millify(currency.MarketCap)}</p>
+                                <p>Market Cap: {millify(currency.marketCap)}</p>
                                 <p>Daily Change: {millify(currency.change)}%</p>
                             </Card>
                         </Link>
