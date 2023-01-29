@@ -2,6 +2,7 @@ import React,{useState,useEffect} from "react";
 import {Link} from "react-router-dom";
 import millify from "millify";
 import {Card,Row,Col,Input} from "antd";
+import Spinner from "./Spinner";
 
 import {useGetCryptosQuery} from "../services/cryptoApi"
 
@@ -13,12 +14,13 @@ const Cryptocurrencies = ({simplified}) => {
     const [cryptos,setCryptos] = useState([]);
     const [searchTerm,setSearchTerm] = useState("");
 
+
     useEffect(() => {
         const filterData = cryptosList?.data?.coins.filter((coin) => coin.name.toLowerCase().includes(searchTerm.toLowerCase()))
         setCryptos(filterData);
     },[cryptosList,searchTerm]);
 
-    if(isFetching) return "Loading...";
+    if(isFetching) return <Spinner />;
     // console.log(cryptos);
     return(
         <>

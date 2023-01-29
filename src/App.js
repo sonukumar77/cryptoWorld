@@ -40,7 +40,7 @@ const App = () => {
             style={{ color: "white", textAlign: "center" }}
           >
             CryptoWorld <br />
-            All rights reserved <br />
+            All rights reserved<br />
             Design & Developed By Sonu Verma with ❤
           </Typography.Title>
           <Space>

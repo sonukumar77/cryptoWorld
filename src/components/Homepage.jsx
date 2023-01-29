@@ -1,7 +1,9 @@
 import React from "react";
 import millify from "millify";
+
 import {Typography,Row,Col,Statistic} from "antd";
 import {Link} from "react-router-dom";
+import Spinner from "./Spinner";
 
 import { useGetCryptosQuery } from "../services/cryptoApi";
 import Cryptocurrencies from "./Cryptocurrencies";
@@ -14,7 +16,7 @@ const Homepage = () => {
 
     // console.log(data,error,isFetching);
     const globalStats = data?.data?.stats;
-    if(isFetching) return "Loading...";
+    if(isFetching) return <Spinner />;
     if(error) throw error;
     return(
         <>

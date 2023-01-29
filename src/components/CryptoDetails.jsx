@@ -1,23 +1,26 @@
-import React from "react";
+import React,{useState} from "react";
 import millify from "millify";
 import HTMLReactParser from "html-react-parser";
 import {useParams} from "react-router-dom";
-// import {Col,Row,Typography,Select} from "antd";
-import {Col,Row,Typography} from "antd";
-import { MoneyCollectOutlined, DollarCircleOutlined, FundOutlined, ExclamationCircleOutlined, StopOutlined, TrophyOutlined, CheckOutlined, NumberOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import {Col,Row,Typography,Select} from "antd";
 
-import {useGetCryptoDetailsQuery} from "../services/cryptoApi"
+import Spinner from "./Spinner";
+
+import { MoneyCollectOutlined, DollarCircleOutlined, FundOutlined, ExclamationCircleOutlined, StopOutlined, TrophyOutlined, CheckOutlined, NumberOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import {useGetCryptoDetailsQuery,useGetCryptoHistoryQuery} from "../services/cryptoApi"
+import LineChart from "./LineChart";
 const {Title,Text} = Typography;
-// const {Option} = Select;
+const {Option} = Select;
 
 const CryptoDetails = () => {
 
     const {coinId} = useParams();
-    // const [timePeriod,setTimePeriod] = useState('7d');
+    const [timePeriod,setTimePeriod] = useState('7d');
     const {data,isFetching} = useGetCryptoDetailsQuery(coinId);
+    const {data:coinHistory} = useGetCryptoHistoryQuery({coinId,timePeriod});
+
     const cryptoDetails = data?.data?.coin;
-    
-    // const time = ['3h', '24h', '7d', '30d', '1y', '3m', '3y', '5y'];
+    const time = ['3h', '24h', '7d', '30d', '1y', '3m', '3y', '5y'];
 
     const stats = [
       { title: 'Price to USD', value: `$ ${cryptoDetails?.price && millify(cryptoDetails?.price)}`, icon: <DollarCircleOutlined /> },
@@ -35,7 +38,7 @@ const CryptoDetails = () => {
       { title: 'Circulating Supply', value: `$ ${cryptoDetails?.supply?.circulating && millify(cryptoDetails?.supply?.circulating)}`, icon: <ExclamationCircleOutlined /> },
     ];
   
-    if(isFetching) return "Loading...";
+    if(isFetching) return <Spinner />;
 
     return(
         <Col className="coin-detail-container">
@@ -48,15 +51,16 @@ const CryptoDetails = () => {
                 </p>
 
             </Col>
-            {/* <Select 
+            <Select 
             defaultValue="7d" 
             className="select-timeperiod" 
             placeholder="Select timeperiod"
             onChange={(value) => setTimePeriod(value) }
             >
                 {time.map((date) => <Option key={date}>{date}</Option>)}
-            </Select> */}
-
+            </Select>
+            {/* Line Chart */}
+            <LineChart coinHistory={coinHistory} currentPrice={millify(cryptoDetails.price)} coinName={cryptoDetails.name}/>
             <Col className="stats-container">
                 <Col className="coin-value-statistics">
                     <Col className="coin-value-statistics-heading">
@@ -110,9 +114,9 @@ const CryptoDetails = () => {
                         {cryptoDetails?.name} Links    
                     </Title>    
                     {
-                        cryptoDetails?.links?.map((link) => (
+                        cryptoDetails?.links?.map((link,i) => (
 
-                            <Row className="coin-link" key={link.name}>
+                            <Row className="coin-link" key={i}>
                                 <Title level={5} className="link-name">
                                     {link.type}
                                 </Title>

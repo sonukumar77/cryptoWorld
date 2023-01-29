@@ -4,14 +4,6 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { cryptoApi } from "../services/cryptoApi";
 import { cryptoNewsApi } from "../services/cryptoNewsApi";
 
-
-// export default configureStore({
-//     reducer:{
-//         [cryptoApi.reducerPath] :cryptoApi.reducer,
-//     },
-// });
-
-
 const store = configureStore({
   reducer: {
     // Add the generated reducer as a specific top-level slice

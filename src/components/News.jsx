@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import moment from "moment";
 import {Select,Typography,Row,Col,Avatar,Card} from "antd";
+import Spinner from "./Spinner";
 
 import { useGetCryptoNewsQuery } from "../services/cryptoNewsApi";
 import { useGetCryptosQuery } from "../services/cryptoApi";
@@ -18,7 +19,7 @@ const News = ({simplified}) => {
     const {data:cryptoNews} = useGetCryptoNewsQuery({newsCategory,count:count});
     const {data} = useGetCryptosQuery(100);
 
-    if(!cryptoNews?.value) return "Loading...";
+    if(!cryptoNews?.value) return <Spinner/>;
     // console.log(cryptoNews)
     return(
         <Row gutter={[24,24]}> 
